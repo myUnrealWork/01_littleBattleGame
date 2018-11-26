@@ -4,9 +4,9 @@ You're welcome to download and fork if you like it, or do whatever else legal wi
 
 Enjoy it.
 
-TipTiC
+TiPTiC
 
 --- ---
 
-##Record List
+## Record List
 * LBG01 First Version.
