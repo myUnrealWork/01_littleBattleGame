@@ -1,2 +1,2 @@
 # 01_littleBattleGame
-simple AI, terrain in Unreal 4
+Simple AI, terrain in Unreal 4
