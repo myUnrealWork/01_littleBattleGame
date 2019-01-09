@@ -9,7 +9,9 @@
 // Forward declaration
 class UTankBarrel;
 class UTankTurret;
+class AProjectile;
 class UTankAimingComponent;
+class UTankMovementComponent;
 
 UCLASS()
 class BATTLEGAME_API ATank : public APawn
@@ -26,6 +28,9 @@ protected:
 
 	//引用组件
 	UTankAimingComponent *TankAimingComponent = nullptr;
+	
+	UPROPERTY(BlueprintReadOnly)
+	UTankMovementComponent *TankMovementComponent = nullptr;
 
 public:	
 
@@ -35,13 +40,24 @@ public:
 	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
+		void Fire();
+
+private:
+	UFUNCTION(BlueprintCallable, Category = Setup)
 		void SetBarrelReference(UTankBarrel *BarrelToSet);
 	UFUNCTION(BlueprintCallable, Category = Setup)
 		void SetTurretReference(UTankTurret *TurretToSet);
-	UPROPERTY(EditAnyWhere, Category = Firing)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+		TSubclassOf<AProjectile> ProjectileBlueprint;
+	//UClass *ProjectileBlueprint; // 可以使用此语句 在蓝图中配置 Projectile_BP
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
 		float LaunchSpeed = 4000; // Sensible starting value of 40 m/s
-	UFUNCTION(BlueprintCallable, Category = Setup)
-		void Fire();
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+		float ReloadTimeInSeconds = 3;
 
 
+	//local barrel reference for spawning projectile
+	UTankBarrel *Barrel = nullptr;
+	double LastFireTime = 0;
 };
