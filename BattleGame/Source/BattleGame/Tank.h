@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Individual Game.
 
 #pragma once
 
@@ -27,6 +27,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	//引用组件
+	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent *TankAimingComponent = nullptr;
 	
 	UPROPERTY(BlueprintReadOnly)
@@ -34,8 +35,8 @@ protected:
 
 public:	
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	//// Called to bind functionality to input
+	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void AimAt(FVector HitLocation);
 
@@ -43,10 +44,10 @@ public:
 		void Fire();
 
 private:
-	UFUNCTION(BlueprintCallable, Category = Setup)
-		void SetBarrelReference(UTankBarrel *BarrelToSet);
-	UFUNCTION(BlueprintCallable, Category = Setup)
-		void SetTurretReference(UTankTurret *TurretToSet);
+	//UFUNCTION(BlueprintCallable, Category = Setup)
+	//	void SetBarrelReference(UTankBarrel *BarrelToSet);
+	//UFUNCTION(BlueprintCallable, Category = Setup)
+	//	void SetTurretReference(UTankTurret *TurretToSet);
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 		TSubclassOf<AProjectile> ProjectileBlueprint;
 	//UClass *ProjectileBlueprint; // 可以使用此语句 在蓝图中配置 Projectile_BP
@@ -55,7 +56,6 @@ private:
 		float LaunchSpeed = 4000; // Sensible starting value of 40 m/s
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 		float ReloadTimeInSeconds = 3;
-
 
 	//local barrel reference for spawning projectile
 	UTankBarrel *Barrel = nullptr;

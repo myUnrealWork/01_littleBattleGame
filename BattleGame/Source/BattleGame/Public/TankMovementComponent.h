@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Individual Game.
 
 #pragma once
 
@@ -7,6 +7,7 @@
 #include "TankMovementComponent.generated.h"
 
 class UTankTrack;
+
 /**
  * Responsible for driving the tank tracks
  */
@@ -16,19 +17,21 @@ class BATTLEGAME_API UTankMovementComponent : public UNavMovementComponent
 	GENERATED_BODY()
 
 public://被蓝图使用需为public
+	// 初始化左右轮胎
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void Initialize(UTankTrack *LeftTrackToSet, UTankTrack *RightTrackToSet);
-
+	//驱动向前移动
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void IntendMoveForward(float Throw); // control throw
-
+	//驱动右转----
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void IntendTurnRight(float Throw);
 
-	// TODO check best protection of this method
+	
+private:
+	// Called from the pathfinding logic by AI controllers
 	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 
-private:
 	UTankTrack *LeftTrack = nullptr;
 	UTankTrack *RightTrack = nullptr;
 };

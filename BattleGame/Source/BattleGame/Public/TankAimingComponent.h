@@ -1,10 +1,19 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Individual Game.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
+
+//Enum for aiming state
+UENUM()
+enum class EFiringState :uint8
+{
+	Reloading,
+	Aiming,
+	Locked
+};
 
 class UTankBarrel; // Forward declaration
 class UTankTurret;
@@ -24,6 +33,11 @@ public:
 
 	void SetBarrelReference(UTankBarrel *BarrelToSet);
 	void SetTurretReference(UTankTurret *TurretToSet);
+
+protected://asking to access these property from a subclass
+
+	UPROPERTY(BlueprintReadOnly, Category = Setup)
+	EFiringState FiringState = EFiringState::Aiming;
 
 private:
 	//±‰¡ø

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Individual Game.
 
 #pragma once
 
@@ -7,6 +7,7 @@
 #include "TankPlayerController.generated.h"
 
 class ATank;
+
 /**
  * 
  */
@@ -19,12 +20,13 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 
+protected:
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	ATank* GetControlledTank() const;
 private:
 	// Start the tank moving the barrel so that a shot would hit 
 	// where the crosshiar intersects the world   
 	void AimTowardsCrosshair();
-
-	ATank* GetControlledTank() const;
 
 	// Return an OUT parameter. true if hit landscape
 	bool GetSightRayHitLocation(FVector &OutHitLocation) const;
@@ -39,5 +41,4 @@ private:
 		float CrossHairyLocation = 0.3333;
 	UPROPERTY(EditDefaultsOnly)
 		float LineTraceRange = 1000000;
-	
 };
