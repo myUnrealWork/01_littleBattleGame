@@ -17,6 +17,7 @@ enum class EFiringState :uint8
 
 class UTankBarrel; // Forward declaration
 class UTankTurret;
+class AProjectile;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLEGAME_API UTankAimingComponent : public UActorComponent
@@ -27,12 +28,16 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-	void AimAt(FVector HitLocation, float LaunchSpeed);
+	void AimAt(FVector HitLocation);
 
-	//TODO add SetTurretReference
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
-	void SetBarrelReference(UTankBarrel *BarrelToSet);
-	void SetTurretReference(UTankTurret *TurretToSet);
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void Fire();
+
+	//void SetBarrelReference(UTankBarrel *BarrelToSet);
+	//void SetTurretReference(UTankTurret *TurretToSet);
 
 protected://asking to access these property from a subclass
 
@@ -40,9 +45,21 @@ protected://asking to access these property from a subclass
 	EFiringState FiringState = EFiringState::Aiming;
 
 private:
-	//变量
+	// method
+	void MoveBarrelTowards(FVector AimDirection);
+
+	// 变量
 	UTankBarrel *Barrel = nullptr;
 	UTankTurret *Turret = nullptr;
 
-	void MoveBarrelTowards(FVector AimDirection);
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	TSubclassOf<AProjectile> ProjectileBlueprint;
+	//UClass *ProjectileBlueprint; // 可以使用此语句 在蓝图中配置 Projectile_BP
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float ReloadTimeInSeconds = 3;
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float LaunchSpeed = 4000; // Sensible starting value of 40 m/s
+
+	double LastFireTime = 0;
 };

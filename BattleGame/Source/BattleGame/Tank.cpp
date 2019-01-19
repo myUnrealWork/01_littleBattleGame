@@ -1,11 +1,6 @@
 // Individual Game.
 
 #include "Tank.h"
-#include "Engine/World.h"
-#include "TankBarrel.h"
-#include "Projectile.h"
-#include "TankAimingComponent.h"
-#include "TankMovementComponent.h"
 
 // Sets default values
 ATank::ATank()
@@ -19,33 +14,19 @@ ATank::ATank()
 	//TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
 }
 
-// Called when the game starts or when spawned
-void ATank::BeginPlay()
-{
-	Super::BeginPlay();
-}
+//// Called when the game starts or when spawned
+//void ATank::BeginPlay()
+//{
+//	Super::BeginPlay();
+//	//TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+//}
 
-//蓝图组件
-void ATank::AimAt(FVector HitLocation)
-{
-	TankAimingComponent->AimAt(HitLocation,LaunchSpeed);
-}
-
-void ATank::Fire()
-{
-	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-	if (Barrel && isReloaded)
-	{
-		// Spawn a projectile at the socket location on the barrel
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
-			ProjectileBlueprint,
-			Barrel->GetSocketLocation(FName("Projectile")),
-			Barrel->GetSocketRotation(FName("Projectile"))
-			);
-		Projectile->LaunchProjectile(LaunchSpeed);
-		LastFireTime = FPlatformTime::Seconds();
-	}
-}
+////蓝图组件
+//void ATank::AimAt(FVector HitLocation)
+//{
+//	if (!ensureAlways(TankAimingComponent)) { return; }
+//	TankAimingComponent->AimAt(HitLocation,LaunchSpeed);
+//}
 
 //void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 //{

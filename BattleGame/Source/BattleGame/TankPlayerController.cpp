@@ -1,16 +1,21 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
+#include "TankAimingComponent.h"
 #include "GameFramework/Actor.h"
 #include "Engine//World.h"
-#include "Tank.h"
 
 //开始
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto ControlledTank = GetControlledTank();
+	//先一步在c++构造器中声明 查找；后在蓝图中实现
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensureAlways(AimingComponent)) { return; }
+
+	FoundAimingComponent(AimingComponent);
+
 	//if (!ControlledTank)
 	//{
 	//	UE_LOG(LogTemp, Warning, TEXT("PlayController not possessing a tank."));
@@ -28,20 +33,18 @@ void ATankPlayerController::Tick(float DeltaTime)
 	AimTowardsCrosshair();
 }
 
-//获取控制坦克
-ATank* ATankPlayerController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
+
 
 //瞄准准心
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	if (!GetControlledTank()) { return; }
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensureAlways(AimingComponent)) { return; }
+
 	FVector HitLocation; //Out parameter
 	if (GetSightRayHitLocation(HitLocation)) // Has "side-effect",is going to line trace 
 	{
-		GetControlledTank()->AimAt(HitLocation);
+		AimingComponent->AimAt(HitLocation);
 		// Tell controlled tank to aim at this point
 	}
 }
@@ -75,7 +78,6 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector &
 	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CamerWorldLocation, LookDirection);
 }
 
-
 bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector &HitLocation) const
 {
 	FHitResult HitResult; //碰撞结果集
@@ -101,5 +103,10 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	return false; //Line trace didn't succeed 
 }
 
+//获取控制坦克
+//ATank* ATankPlayerController::GetControlledTank() const
+//{
+//	return Cast<ATank>(GetPawn());
+//}
 
 

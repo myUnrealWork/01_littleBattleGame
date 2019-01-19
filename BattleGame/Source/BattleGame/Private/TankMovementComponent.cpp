@@ -5,14 +5,14 @@
 
 void UTankMovementComponent::Initialize(UTankTrack *LeftTrackToSet, UTankTrack *RightTrackToSet)
 {
-	if (!LeftTrackToSet || !RightTrackToSet) { return; }
+	if (!ensureAlways(LeftTrackToSet)||!ensureAlways(RightTrackToSet)) { return; } //原本此行为 ！xx|| ！xx
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
 }
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!ensureAlways(LeftTrack) || !ensureAlways(RightTrack)) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
 
@@ -22,7 +22,7 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 //即将左转和右转的力 选择性地右转力的方向
 void UTankMovementComponent::IntendTurnRight(float Throw)
 {
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!ensureAlways(LeftTrack) || !ensureAlways(RightTrack)) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
 	//TODO prevent double-speed due to dual control use
@@ -38,7 +38,5 @@ void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, boo
 	
 	auto RightThrow = FVector::CrossProduct(TankForward, AIForwardIntention).Z;//正弦 sin 世界坐标下比较转向
 	IntendTurnRight(RightThrow);
-
-	UE_LOG(LogTemp, Warning, TEXT("Right:%f ,Forward: %f"), RightThrow, ForwardThrow);
 }
 
