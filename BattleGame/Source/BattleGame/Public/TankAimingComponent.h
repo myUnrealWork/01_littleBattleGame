@@ -28,7 +28,11 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
+	bool IsBarrelMoving();
+
 	void AimAt(FVector HitLocation);
+
+	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
@@ -42,10 +46,13 @@ public:
 protected://asking to access these property from a subclass
 
 	UPROPERTY(BlueprintReadOnly, Category = Setup)
-	EFiringState FiringState = EFiringState::Aiming;
+	EFiringState FiringState = EFiringState::Reloading;
 
 private:
 	// method
+
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction) override;
+
 	void MoveBarrelTowards(FVector AimDirection);
 
 	// ±‰¡ø
@@ -62,4 +69,6 @@ private:
 	float LaunchSpeed = 4000; // Sensible starting value of 40 m/s
 
 	double LastFireTime = 0;
+
+	FVector AimDirection;
 };

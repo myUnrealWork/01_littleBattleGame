@@ -5,16 +5,17 @@
 
 void UTankMovementComponent::Initialize(UTankTrack *LeftTrackToSet, UTankTrack *RightTrackToSet)
 {
-	if (!ensureAlways(LeftTrackToSet)||!ensureAlways(RightTrackToSet)) { return; } //原本此行为 ！xx|| ！xx
+	if (!ensure(LeftTrackToSet)||!ensure(RightTrackToSet)) { return; } //原本此行为 ！xx|| ！xx
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
 }
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
-	if (!ensureAlways(LeftTrack) || !ensureAlways(RightTrack)) { return; }
+	if (!ensure(LeftTrack) || !ensure(RightTrack)) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
+	UE_LOG(LogTemp, Warning, TEXT("move:%f"),Throw); 
 
 	//TODO prevent double-speed due to dual control use
 }
@@ -22,9 +23,10 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 //即将左转和右转的力 选择性地右转力的方向
 void UTankMovementComponent::IntendTurnRight(float Throw)
 {
-	if (!ensureAlways(LeftTrack) || !ensureAlways(RightTrack)) { return; }
+	if (!ensure(LeftTrack) || !ensure(RightTrack)) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
+	UE_LOG(LogTemp, Warning, TEXT("turn :%f"), Throw);
 	//TODO prevent double-speed due to dual control use
 }
 
