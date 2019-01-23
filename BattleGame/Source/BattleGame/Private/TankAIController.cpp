@@ -26,7 +26,10 @@ void ATankAIController::Tick(float DeltaTime)
 	//Aim towards the player
 	AimingComponent->AimAt(PlayerTank->GetActorLocation());
 	
-	AimingComponent->Fire();// TODO not every frame
+	if (AimingComponent->GetFiringState() == EFiringState::Locked)
+	{
+		AimingComponent->Fire();// TODO not every frame
+	}
 
 }
 

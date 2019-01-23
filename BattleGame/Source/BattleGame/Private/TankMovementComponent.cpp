@@ -15,7 +15,6 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 	if (!ensure(LeftTrack) || !ensure(RightTrack)) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
-	UE_LOG(LogTemp, Warning, TEXT("move:%f"),Throw); 
 
 	//TODO prevent double-speed due to dual control use
 }
@@ -26,7 +25,6 @@ void UTankMovementComponent::IntendTurnRight(float Throw)
 	if (!ensure(LeftTrack) || !ensure(RightTrack)) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
-	UE_LOG(LogTemp, Warning, TEXT("turn :%f"), Throw);
 	//TODO prevent double-speed due to dual control use
 }
 

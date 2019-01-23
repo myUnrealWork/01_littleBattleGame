@@ -56,15 +56,13 @@ void UTankTrack::ApplySidewaysForce()
 void UTankTrack::SetThrottle(float Throttle)
 {
 	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1, 1);
-
 }
 
 void UTankTrack::DriveTrack()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Throttle:%f"), CurrentThrottle);
 	auto ForceApplied = GetForwardVector() * CurrentThrottle * TrackMaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
-	//USceneComponent 类型 转 子类 UPrimitiveComponent // USceneComponent 不允许被添加FVector类型参数
+	// USceneComponent 类型 转 子类 UPrimitiveComponent // USceneComponent 不允许被添加FVector类型参数
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
 }

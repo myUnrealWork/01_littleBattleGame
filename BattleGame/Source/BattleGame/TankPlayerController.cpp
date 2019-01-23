@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Individual Game.
 
 #include "TankPlayerController.h"
 #include "TankAimingComponent.h"
@@ -64,11 +64,11 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
 		//Line-trace along that LookDirection, and see what we hit (up to max range)
-		GetLookVectorHitLocation(LookDirection, OutHitLocation);
+		return GetLookVectorHitLocation(LookDirection, OutHitLocation);
 
 		/*UE_LOG(LogTemp, Warning, TEXT("Location: %s "), *LookDirection.ToString());*/
 	}
-	return true;
+	return false;
 }
 
 //将2D屏幕坐标位置转化为世界空间3D坐标和方向 并返回布尔值
