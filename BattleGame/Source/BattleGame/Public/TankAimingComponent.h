@@ -41,22 +41,20 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Firing)
 	void Fire();
 
-	EFiringState GetFiringState() const;
-
 	UFUNCTION(BlueprintCallable, Category = Firing)
-	int GetRoundsLeft() const;
+	int32 GetRoundsLeft() const;
+
+	EFiringState GetFiringState() const;
 
 	//void SetBarrelReference(UTankBarrel *BarrelToSet);
 	//void SetTurretReference(UTankTurret *TurretToSet);
 
 protected://asking to access these property from a subclass
-
 	UPROPERTY(BlueprintReadOnly, Category = Setup)
 	EFiringState FiringState = EFiringState::Reloading;
 
 private:
 	// method
-
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction) override;
 
 	void MoveBarrelTowards(FVector AimDirection);
@@ -74,9 +72,11 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float LaunchSpeed = 4000; // Sensible starting value of 40 m/s
 
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	int32 RoundsLeft = 3;//ʣ�൯ҩ
+
 	double LastFireTime = 0;
 
 	FVector AimDirection;
 
-	int RoundsLeft = 3;//ʣ�൯ҩ
 };
