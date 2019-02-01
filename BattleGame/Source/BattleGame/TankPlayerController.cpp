@@ -29,6 +29,7 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if (!GetPawn()) return;
 	//先一步在c++构造器中声明 查找；后在蓝图中实现
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensureAlways(AimingComponent)) { return; }
@@ -111,7 +112,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 		HitResult, //结果集
 		StartLocation, //起始位置
 		EndLocation, //终点位置
-		ECollisionChannel::ECC_Visibility) //在碰撞通道 中 选择可视性碰撞检测 
+		ECollisionChannel::ECC_Camera) //在碰撞通道 中 选择可视性碰撞检测 
 		)
 	{
 		// 检测为true，将结果集 碰撞位置  记录 并赋值给HitLocation

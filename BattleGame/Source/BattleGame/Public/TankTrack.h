@@ -22,17 +22,15 @@ public :
 	//Max fore per track, in Newtons
 	UPROPERTY(EditDefaultsOnly)
 	float TrackMaxDrivingForce = 400000;// Assume 40 tonne tank, and 1g acceleration
-
-	float CurrentThrottle = 0;
 protected:
 	UTankTrack();
 
-	virtual void BeginPlay() override;
-
-	void ApplySidewaysForce();
+	//void ApplySidewaysForce();
 	
-	void DriveTrack();
+	void DriveTrack(float CurrentThrottle);
 
-	UFUNCTION()
-	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+	TArray<class ASprungWheel*> GetWheels() const;
+
+	/*UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);*/
 };
