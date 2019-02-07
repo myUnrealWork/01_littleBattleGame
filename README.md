@@ -8,7 +8,7 @@ TiPTiC
 
 --- ---
 
-## Record List
+## D List
 * LBG01 First Version.
 * LBG02 Initial project.
 * LBG03 Landscape sculpted.
